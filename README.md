@@ -95,6 +95,44 @@ chmod +x build.sh
 
 This will create **libORB_SLAM3.so**  at *lib* folder and the executables in *Examples* folder.
 
+Or use DockerFile to build:
+
+1. Open terminal in current directory 
+
+2. Build orbslam image and specify build directory for cmake orbslam_dir
+
+    ```
+    docker build --build-arg orbslam_dir=/your/directory --pull --rm -f "Dockerfile" -t orbslam:latest "."
+    ```
+
+    or leave empty (default /app/Dev/)
+
+    ```
+    docker build --pull --rm -f "Dockerfile" -t orbslam:latest "."
+    ``` 
+    to build with log
+    
+    ```
+    docker build --pull --rm -f "Dockerfile" -t orbslam:latest --progress=plain "." 2>&1 | tee build.log
+    ```
+
+
+3. Crete and run continer
+    ```
+    docker run --name orbslam -d orbslam:latest
+    ```
+
+4. Copy build files from container
+    ```
+    docker cp orbslam:/app/Dev/ ./Dev
+    ```
+
+5. Stop and remove container
+    ```
+    docker stop orbslam
+    docker rm orbslam
+    ```
+
 # 4. Running ORB-SLAM3 with your camera
 
 Directory `Examples` contains several demo programs and calibration files to run ORB-SLAM3 in all sensor configurations with Intel Realsense cameras T265 and D435i. The steps needed to use your own camera are: 

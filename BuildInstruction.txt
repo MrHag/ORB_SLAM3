@@ -1,0 +1,18 @@
+1. Open terminal in current directory 
+
+2. Build orbslam image and specify build directory for cmake orbslam_dir
+docker build --build-arg orbslam_dir=/your/directory --pull --rm -f "Dockerfile" -t orbslam:latest "."
+or leave empty (default /app/Dev/)
+docker build --pull --rm -f "Dockerfile" -t orbslam:latest "."
+to build with log
+docker build --pull --rm -f "Dockerfile" -t orbslam:latest --progress=plain "." 2>&1 | tee build.log
+
+3. Crete and run continer
+docker run --name orbslam -d orbslam:latest
+
+4. Copy build files from container
+docker cp orbslam:/app/Dev/ ./Dev
+
+5. Stop and remove container
+docker stop orbslam
+docker rm orbslam
